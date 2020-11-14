@@ -9,14 +9,6 @@ module.exports = {
 
     let helpEmbed = new MessageEmbed()
     {
-  var SUPPORT = "https://discord.gg/PN6VQUc";
-  var Link = "https://discord.com/api/oauth2/authorize?client_id=761634046840275005&permissions=8&scope=bot";
-  var Web = "https://discord.gg/Ra8dJ4t";
-let embed = new Discord.RichEmbed()
-
-
-.setThumbnail(message.author.avatarURL)
-.setDescription(`** **[ Support](${SUPPORT})** - **[ Invite](${Link})**
  
       .setTitle(`${message.client.user.username} Help`)
       .setDescription("List of all commands")
