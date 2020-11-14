@@ -12,6 +12,8 @@ module.exports = {
     
       .setTitle(`${message.client.user.username} Help`)
       .setDescription("List of all commands")
+      .setAuthor(message.author.username, message.author.displayAvatarURL)
+      .setThumbnail(message.author.avatarURL)
       .setTitle(
         "CLICK HERE TO  LINK BOT"
       )
@@ -19,18 +21,19 @@ module.exports = {
        "https://discord.com/api/oauth2/authorize?client_id=755768592104030208&permissions=8&scope=bot"
         )
       .setThumbnail(message.author.avatarURL)
-      .setColor("#F8AA2A")
-      .setTimestamp()
-  .setFooter(message.author.username, message.author.avatarURL)
- .setAuthor(`${message.author.username}`, `${message.author.avatarURL}`)
-    }
-    );
+      .setColor("#F8AA2A");
+      
+
+    commands.forEach((cmd) => {
+      helpEmbed.addField(
+        `**${message.client.prefix}${cmd.name} ${cmd.aliases ? `(${cmd.aliases})` : ""}**`,
+        `${cmd.description}`,
+        true
+      );
     });
-  
-  helpEmbed.setTimestamp();
+
+    helpEmbed.setTimestamp();
 
     return message.channel.send(helpEmbed).catch(console.error);
   }
 };
-
-   
