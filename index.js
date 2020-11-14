@@ -91,19 +91,3 @@ client.on("message", async (message) => {
   }
 });
 
-
-client.on("message", async message => {
-  if (message.content.startsWith(prefix + "support")) {
-    let invite = new Discord.RichEmbed()
-      .setColor("#3BA9FF")
-      .setAuthor(message.author.username, message.author.displayAvatarURL)
-      .setThumbnail(message.author.avatarURL)
-      .setTitle(
-        "Link Support Bot ::blue_heart:"
-      )
-      .setURL(
-        "https://discord.gg/MhdGpPw"
-      );
-    message.channel.sendEmbed(invite);
-  }
-});
