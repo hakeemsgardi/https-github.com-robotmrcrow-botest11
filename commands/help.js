@@ -12,6 +12,8 @@ module.exports = {
     
       .setTitle(`${message.client.user.username} Help`)
       .setDescription("List of all commands")
+      .setAuthor(message.author.username, message.author.displayAvatarURL)
+      .setThumbnail(message.author.avatarURL)
       .setTitle(
         "CLICK HERE TO  LINK BOT"
       )
@@ -24,7 +26,7 @@ module.exports = {
 
     commands.forEach((cmd) => {
       helpEmbed.addField(
-        `**${message.client.prefix}${cmd.name} ${cmd.aliases ? `(${cmd.aliases}`) : ""}**`,
+        `**${message.client.prefix}${cmd.name} ${cmd.aliases ? `(${cmd.aliases})` : ""}**`,
         `${cmd.description}`,
         true
       );
