@@ -6,9 +6,11 @@ module.exports = {
   description: "Display all commands and descriptions",
   execute(message) {
     let commands = message.client.commands.array();
-
+    var Link ="https://discord.com/api/oauth2/authorize?client_id=755049610149625908&permissions=8&scope=bot";
+     
     let helpEmbed = new MessageEmbed()
     
+      .setDescription(`**[ Invite](${Link})**`
       .setTitle(`${message.client.user.username} Help`)
       .setDescription("List of all commands")
       .setThumbnail(message.author.avatarURL)
