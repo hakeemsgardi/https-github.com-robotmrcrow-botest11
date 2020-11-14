@@ -17,7 +17,7 @@ module.exports = {
       )
       .setURL(
        "https://discord.com/api/oauth2/authorize?client_id=755768592104030208&permissions=8&scope=bot"
-        );
+        )
       .setThumbnail(message.author.avatarURL)
       .setColor("#F8AA2A");
       
