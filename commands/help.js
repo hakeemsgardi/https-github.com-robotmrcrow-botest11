@@ -22,8 +22,15 @@ module.exports = {
       .setColor("#F8AA2A")
       .setTimestamp()
   .setFooter(message.author.username, message.author.avatarURL)
- .setAuthor(`${message.author.username}`, `${message.author.avatarURL}`);
-message.channel.sendEmbed(embed);
+ .setAuthor(`${message.author.username}`, `${message.author.avatarURL}`)
     }
-});
+    );
+    });
+  
+  helpEmbed.setTimestamp();
+
+    return message.channel.send(helpEmbed).catch(console.error);
+  }
+};
+
    
