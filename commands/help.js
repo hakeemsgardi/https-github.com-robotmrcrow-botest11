@@ -15,7 +15,7 @@ module.exports = {
       .setAuthor(message.author.username, message.author.displayAvatarURL)
       .setThumbnail(message.author.avatarURL)
       .setTitle(
-        "Link invite Bot ::blue_heart:"
+        "CLICK HERE TO  LINK BOT"
       )
       .setURL(
        "https://discord.com/api/oauth2/authorize?client_id=755768592104030208&permissions=8&scope=bot"
