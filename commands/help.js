@@ -8,9 +8,12 @@ module.exports = {
     let commands = message.client.commands.array();
 
     let helpEmbed = new MessageEmbed()
+    
       .setTitle(`${message.client.user.username} Help`)
       .setDescription("List of all commands")
+      .setThumbnail(message.author.avatarURL)
       .setColor("#F8AA2A");
+      
 
     commands.forEach((cmd) => {
       helpEmbed.addField(
