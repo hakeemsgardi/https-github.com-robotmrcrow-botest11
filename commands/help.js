@@ -12,6 +12,7 @@ module.exports = {
     
       .setTitle(`${message.client.user.username} Help`)
       .setDescription("List of all commands")
+      .setAuthor(message.author.username, message.author.displayAvatarURL)
       .setThumbnail(message.author.avatarURL)
       .setTitle(
         "Link invite Bot ::blue_heart:"
