@@ -10,7 +10,7 @@ module.exports = {
      
     let helpEmbed = new MessageEmbed()
     
-      .setDescription(`**[ Invite](${Link})**`
+      .setDescription(`**[ Invite](${Link})**`)
       .setTitle(`${message.client.user.username} Help`)
       .setDescription("List of all commands")
       .setThumbnail(message.author.avatarURL)
