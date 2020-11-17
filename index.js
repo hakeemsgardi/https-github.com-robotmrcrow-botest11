@@ -59,9 +59,9 @@ client.on("message", async (message) => {
   const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
 
-  const command =
-    client.commands.get(commandName) ||
-    client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+    const command =
+    client.command.get(commandName) ||
+    client.command.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) return;
 
@@ -70,8 +70,8 @@ client.on("message", async (message) => {
   }
 
   const now = Date.now();
-  const timestamps = cooldowns.get(commands.name);
-  const cooldownAmount = (commands.cooldown || 1) * 1000;
+  const timestamps = cooldowns.get(command.name);
+  const cooldownAmount = (command.cooldown || 1) * 1000;
 
   if (timestamps.has(message.author.id)) {
     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
