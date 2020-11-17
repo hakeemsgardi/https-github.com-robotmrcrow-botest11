@@ -1,72 +1,57 @@
-/**
- * Module Imports
- */
-const { Client, Collection } = require("discord.js");
-const { readdirSync } = require("fs");
-const { join } = require("path");
+const fs = require("fs");
+const Discord = require("discord.js");
+const { prefix, token } = require("./config.json");
 
-let TOKEN, PREFIX;
-try {
-  const config = require("./config.json");
-  TOKEN = config.TOKEN;
-  PREFIX = config.PREFIX;
-} catch (error) {
-  TOKEN = process.env.TOKEN;
-  PREFIX = process.env.PREFIX;
-}
+const client = new Discord.Client();
+client.commands = new Discord.Collection();
 
-const client = new Client({ disableMentions: "everyone" });
+const commandFiles = fs
+  .readdirSync("./commands")
+  .filter((file) => file.endsWith(".js"));
 
-client.login('NzU1MDQ5NjEwMTQ5NjI1OTA4.X19ovw.ztBWDyMpM1nRDcKVFixJXKFfZqc');
-client.commands = new Collection();
-client.prefix = PREFIX;
-client.queue = new Map();
-const cooldowns = new Collection();
-const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-/**
- * Client Events
- */
-client.on("ready", () => {
-setInterval(() => {
-console.log(`${client.user.username} ready! ,Users ${client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)}, Guilds ${client.guilds.cache.size}`);
-client.user.setActivity(`${PREFIX}help ,Users ${client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)}, Guilds ${client.guilds.cache.size}`);
-
-}, 15000);
-
-});
-client.on("warn", (info) => console.log(info));
-client.on("error", console.error);
-
-/**
- * Import all commands
- */
-const commandFiles = readdirSync(join(__dirname, "commands")).filter((file) => file.endsWith(".js"));
 for (const file of commandFiles) {
-  const command = require(join(__dirname, "commands", `${file}`));
+  const command = require(`./commands/${file}`);
   client.commands.set(command.name, command);
 }
 
-client.on("message", async (message) => {
-  if (message.author.bot) return;
-  if (!message.guild) return;
+const cooldowns = new Discord.Collection();
 
-  const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(PREFIX)})\\s*`);
-  if (!prefixRegex.test(message.content)) return;
+client.once("ready", () => {
+  console.log("Ready!");
+});
 
-  const [, matchedPrefix] = message.content.match(prefixRegex);
+client.on("message", (message) => {
+  if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-  const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
+  const args = message.content.slice(prefix.length).trim().split(/ +/);
+  // console.log(args);
   const commandName = args.shift().toLowerCase();
+  // console.log(commandName);
 
-    const command =
-    client.command.get(commandName) ||
-    client.command.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+  const command =
+    client.commands.get(commandName) ||
+    client.commands.find(
+      (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
+    );
 
   if (!command) return;
 
+  if (command.guildOnly && message.channel.type === "dm") {
+    return message.reply("I can't execute that command inside DMs!");
+  }
+
+  if (command.args && !args.length) {
+    let reply = `You didn't provide any arguments, ${message.author}!`;
+
+    if (command.usage) {
+      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+    }
+
+    return message.channel.send(reply);
+  }
+
   if (!cooldowns.has(command.name)) {
-    cooldowns.set(command.name, new Collection());
+    cooldowns.set(command.name, new Discord.Collection());
   }
 
   const now = Date.now();
@@ -85,7 +70,7 @@ client.on("message", async (message) => {
       );
     }
   }
-  
+
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
@@ -93,6 +78,10 @@ client.on("message", async (message) => {
     command.execute(message, args);
   } catch (error) {
     console.error(error);
-    message.reply("There was an error executing that command.").catch(console.error);
+    message.reply("there was an error trying to execute that command!");
   }
 });
+
+//client.on("message", (message) => Coordinates(message));
+
+client.login('NzU1MDQ5NjEwMTQ5NjI1OTA4.X19ovw.ztBWDyMpM1nRDcKVFixJXKFfZqc');
