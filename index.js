@@ -17,7 +17,7 @@ try {
 
 const client = new Client({ disableMentions: "everyone" });
 
-client.login('');
+client.login('NzU1MDQ5NjEwMTQ5NjI1OTA4.X19ovw.KOIE5WKZn9kYVAaFYC8toGfK5hY');
 client.commands = new Collection();
 client.prefix = PREFIX;
 client.queue = new Map();
@@ -41,6 +41,8 @@ client.on("error", console.error);
 /**
  * Import all commands
  */
+
+
 const commandFiles = readdirSync(join(__dirname, "commands")).filter((file) => file.endsWith(".js"));
 for (const file of commandFiles) {
   const command = require(join(__dirname, "commands", `${file}`));
@@ -68,10 +70,9 @@ client.on("message", async (message) => {
   if (!cooldowns.has(command.name)) {
     cooldowns.set(command.name, new Collection());
   }
-
-  const now = Date.now();
+    const now = Date.now();
   const timestamps = cooldowns.get(command.name);
-  const cooldownAmount = (command.cooldown || 1) * 1000;
+  const cooldownAmount = (command.cooldown || 3) * 1000;
 
   if (timestamps.has(message.author.id)) {
     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
@@ -79,11 +80,12 @@ client.on("message", async (message) => {
     if (now < expirationTime) {
       const timeLeft = (expirationTime - now) / 1000;
       return message.reply(
-        `please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`
+        `please wait ${timeLeft.toFixed(
+          1
+        )} more second(s) before reusing the \`${command.name}\` command.`
       );
     }
   }
-
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
