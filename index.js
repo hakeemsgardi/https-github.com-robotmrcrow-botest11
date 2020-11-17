@@ -17,7 +17,7 @@ try {
 
 const client = new Client({ disableMentions: "everyone" });
 
-client.login('NzU1MDQ5NjEwMTQ5NjI1OTA4.X19ovw.Vybka2N-zIbpphM4A8sa15TGd58');
+client.login('NjgxODc0ODYxNDQxODEwNDUz.XlUzcw.ZMOmRZco1eqdXAWnfeZs3Nflwv0');
 client.commands = new Collection();
 client.prefix = PREFIX;
 client.queue = new Map();
@@ -35,7 +35,6 @@ client.user.setActivity(`${PREFIX}help ,Users ${client.guilds.cache.reduce((a, g
 }, 15000);
 
 });
-
 client.on("warn", (info) => console.log(info));
 client.on("error", console.error);
 
@@ -84,7 +83,6 @@ client.on("message", async (message) => {
       );
     }
   }
-
   const now = Date.now();
   const timestamps = cooldowns.get(command.name);
   const cooldownAmount = (command.cooldown || 3) * 1000;
@@ -102,7 +100,6 @@ client.on("message", async (message) => {
     }
   }
 
-
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
@@ -113,4 +110,3 @@ client.on("message", async (message) => {
     message.reply("There was an error executing that command.").catch(console.error);
   }
 });
-
