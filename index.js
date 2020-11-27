@@ -17,7 +17,7 @@ try {
 
 const client = new Client({ disableMentions: "everyone" });
 
-client.login('NzUyOTkyMDk3MjIwNjkwMDIx.X1fsiQ.-JyPgTD_3RNW9MIUYu5sscxED2Q');
+client.login('NzU1MDQ5NjEwMTQ5NjI1OTA4.X19ovw.TeOd4YhymS7vcveZ2F4dCjbS6XI');
 client.commands = new Collection();
 client.prefix = PREFIX;
 client.queue = new Map();
